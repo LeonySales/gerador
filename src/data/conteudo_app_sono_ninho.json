@@ -1,0 +1,35 @@
+{
+  "frases_motivacionais": [
+    "Você está indo muito bem. Confie no processo. 💜",
+    "O sono é uma jornada, não uma linha reta. Tenha paciência. ✨",
+    "A calma de hoje é o sono de amanhã. 🌙",
+    "Seu colo é abrigo. Seu cuidado é direção. 🤱",
+    "Pequenas mudanças constroem grandes noites. 🌼"
+  ],
+  "checklist_pre_sono": [
+    "Ambiente está com luz baixa",
+    "O bebê já mamou ou foi alimentado",
+    "A janela de sono está próxima de fechar",
+    "Foi feito um ritual de sono leve (banho, massagem, história)",
+    "Bebê está limpo e confortável (fralda ok, roupa adequada)",
+    "Sons e estímulos reduzidos (tv, brinquedos)",
+    "Mãe/cuidador está presente e tranquilo"
+  ],
+  "mini_guias_metodos": [
+    {
+      "nome": "Método da Cadeira",
+      "descricao": "Você permanece ao lado do bebê e se afasta gradualmente a cada noite.",
+      "botao": "Quero saber mais"
+    },
+    {
+      "nome": "PUPD (Pick Up Put Down)",
+      "descricao": "Você acolhe o bebê no colo quando chora e o coloca no berço assim que acalma.",
+      "botao": "Quero saber mais"
+    },
+    {
+      "nome": "Desmame Gradual do Contato",
+      "descricao": "Você reduz aos poucos o contato direto até o bebê dormir de forma mais autônoma.",
+      "botao": "Quero saber mais"
+    }
+  ]
+}

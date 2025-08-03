@@ -1,0 +1,208 @@
+{
+  "faixas_etarias": [
+    {
+      "idade_meses": "0-1",
+      "janelas_sono": ["40-45 minutos"],
+      "sonecas_dia": 5,
+      "sono_noturno_estimado": "10h-11h",
+      "alimentacao": "Livre demanda, geralmente a cada 2-3h",
+      "ambiente": {
+        "luminosidade": "Ambiente com luz natural de dia e escuro à noite",
+        "ruido": "Ruído branco é calmante",
+        "temperatura": "22-25°C, roupas leves"
+      },
+      "dicas_extra": [
+        "Evite superestimular o bebê",
+        "Ofereça sonecas com duração máxima de 3h",
+        "Use um ritual simples antes de dormir"
+      ]
+    },
+    {
+      "idade_meses": "2-3",
+      "janelas_sono": ["1h - 1h30"],
+      "sonecas_dia": 4,
+      "sono_noturno_estimado": "10h30 - 11h",
+      "alimentacao": "Livre demanda ou fórmula a cada 3h",
+      "ambiente": {
+        "luminosidade": "Ambiente iluminado de dia, escuro à noite",
+        "ruido": "Ruído branco ainda recomendado",
+        "temperatura": "22-24°C"
+      },
+      "dicas_extra": [
+        "Limite as sonecas a 2h30",
+        "Inclua um ritual com música suave",
+        "Sinais de sono ficam mais evidentes"
+      ]
+    },
+    {
+      "idade_meses": "4-5",
+      "janelas_sono": ["1h30 - 2h"],
+      "sonecas_dia": 3,
+      "sono_noturno_estimado": "11h",
+      "alimentacao": "Leite e início da introdução alimentar ao fim dos 5 meses",
+      "ambiente": {
+        "luminosidade": "Luz suave nas transições, escuro à noite",
+        "ruido": "Ruído branco ajuda nas transições de sono",
+        "temperatura": "22-24°C"
+      },
+      "dicas_extra": [
+        "Crie consistência nas sonecas",
+        "Ritual noturno com banho ou massagem ajuda",
+        "Evite longas sonecas no fim da tarde"
+      ]
+    },
+    {
+      "idade_meses": "6-7",
+      "janelas_sono": ["2h - 2h30"],
+      "sonecas_dia": 3,
+      "sono_noturno_estimado": "11h",
+      "alimentacao": "Alimentação complementar + leite materno ou fórmula",
+      "ambiente": {
+        "luminosidade": "Ambiente tranquilo à noite",
+        "ruido": "Ambiente mais silencioso com som neutro",
+        "temperatura": "22-23°C"
+      },
+      "dicas_extra": [
+        "Evite estímulos após 18h",
+        "Sonecas com até 1h30 cada",
+        "Use linguagem previsível na rotina"
+      ]
+    },
+    {
+      "idade_meses": "8-9",
+      "janelas_sono": ["2h30 - 3h"],
+      "sonecas_dia": 2,
+      "sono_noturno_estimado": "11h",
+      "alimentacao": "Refeições e lanches bem estabelecidos",
+      "ambiente": {
+        "luminosidade": "Ambiente escuro nas sonecas",
+        "ruido": "Som ambiente constante ou silêncio",
+        "temperatura": "21-23°C"
+      },
+      "dicas_extra": [
+        "Duas sonecas: manhã e tarde",
+        "Evite atrasar a segunda soneca",
+        "Rotina consistente melhora o sono noturno"
+      ]
+    },
+    {
+      "idade_meses": "10-11",
+      "janelas_sono": ["3h - 4h"],
+      "sonecas_dia": 2,
+      "sono_noturno_estimado": "10h30 - 11h",
+      "alimentacao": "3 refeições principais + 2 lanches + leite",
+      "ambiente": {
+        "luminosidade": "Luz âmbar no fim do dia",
+        "ruido": "Evite sons altos antes de dormir",
+        "temperatura": "21-23°C"
+      },
+      "dicas_extra": [
+        "Soneca curta de manhã e mais longa à tarde",
+        "Evite brincadeiras agitadas à noite",
+        "Use frases repetidas como gatilhos de sono"
+      ]
+    },
+    {
+      "idade_meses": "12-13",
+      "janelas_sono": ["3h30 - 4h"],
+      "sonecas_dia": 2,
+      "sono_noturno_estimado": "10h - 11h",
+      "alimentacao": "3 refeições, 2 lanches e leite antes de dormir",
+      "ambiente": {
+        "luminosidade": "Ambiente relaxante no fim da tarde",
+        "ruido": "Som suave ou música de relaxamento",
+        "temperatura": "21-22°C"
+      },
+      "dicas_extra": [
+        "Atenção ao início da transição para uma soneca",
+        "A primeira soneca começa a encurtar",
+        "Rotina previsível favorece o sono"
+      ]
+    },
+    {
+      "idade_meses": "14-15",
+      "janelas_sono": ["4h"],
+      "sonecas_dia": 1,
+      "sono_noturno_estimado": "10h - 11h",
+      "alimentacao": "Leite ao acordar e antes de dormir + refeições sólidas",
+      "ambiente": {
+        "luminosidade": "Evite telas antes de dormir",
+        "ruido": "Ambiente tranquilo e escuro",
+        "temperatura": "20-22°C"
+      },
+      "dicas_extra": [
+        "Ofereça uma soneca por volta de 12h/13h",
+        "Evite cochilos após 16h",
+        "Inclua leitura ou música tranquila antes de dormir"
+      ]
+    },
+    {
+      "idade_meses": "16-24",
+      "janelas_sono": ["5h - 6h"],
+      "sonecas_dia": 1,
+      "sono_noturno_estimado": "10h",
+      "alimentacao": "Alimentação sólida + leite em horários fixos",
+      "ambiente": {
+        "luminosidade": "Luz suave e previsível à noite",
+        "ruido": "Ambiente silencioso ajuda no início do sono",
+        "temperatura": "21-23°C"
+      },
+      "dicas_extra": [
+        "Soneca após o almoço",
+        "Comece a reduzir estímulos após 17h",
+        "Desenvolva um ritual de sono com história e abraço"
+      ]
+    },
+    {
+      "idade_meses": "25-36",
+      "janelas_sono": ["6h - 7h"],
+      "sonecas_dia": 1,
+      "sono_noturno_estimado": "10h",
+      "alimentacao": "Refeições regulares e leite conforme rotina",
+      "ambiente": {
+        "luminosidade": "Evite telas 1h antes de dormir",
+        "ruido": "Ambiente silencioso ou com ruído neutro",
+        "temperatura": "21°C"
+      },
+      "dicas_extra": [
+        "Última soneca do dia até 15h no máximo",
+        "Mantenha os horários mesmo aos finais de semana",
+        "Inclua participação da criança na preparação do sono"
+      ]
+    },
+    {
+      "idade_meses": "37-48",
+      "janelas_sono": ["7h - 8h"],
+      "sonecas_dia": 1,
+      "sono_noturno_estimado": "9h30 - 10h",
+      "alimentacao": "Refeições estruturadas + rotina de leite (opcional)",
+      "ambiente": {
+        "luminosidade": "Ambiente calmo e com pouca luz no fim do dia",
+        "ruido": "Evite sons eletrônicos",
+        "temperatura": "20-22°C"
+      },
+      "dicas_extra": [
+        "A criança pode resistir a sonecas, mas o descanso continua importante",
+        "Incentive o descanso após o almoço, mesmo que sem dormir",
+        "Mantenha uma rotina visual com passos antes de dormir"
+      ]
+    },
+    {
+      "idade_meses": "49+",
+      "janelas_sono": ["12h acordado"],
+      "sonecas_dia": 0,
+      "sono_noturno_estimado": "9h - 10h",
+      "alimentacao": "Refeições principais e leves à noite",
+      "ambiente": {
+        "luminosidade": "Luz quente ou âmbar no ritual de sono",
+        "ruido": "Ambiente silencioso ou sons da natureza",
+        "temperatura": "20-22°C"
+      },
+      "dicas_extra": [
+        "Sem necessidade de sonecas, priorize o sono noturno",
+        "Use quadros visuais ou recompensas para ajudar na rotina",
+        "Evite cafeína e açúcar no jantar"
+      ]
+    }
+  ]
+}

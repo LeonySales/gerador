@@ -1,0 +1,169 @@
+{
+  "padrao": [
+    {
+      "bloco": "despertar",
+      "descricao": "Acorde o bebê suavemente, abra cortinas para a luz natural e troque a fralda. Evite telas neste momento."
+    },
+    {
+      "bloco": "cafe",
+      "descricao": "Amamentação ou fórmula. A partir de 6 meses, inclua frutas amassadas ou papinhas leves."
+    },
+    {
+      "bloco": "brincar",
+      "descricao": "Atividades de chão, tummy time, exploração sensorial e brincadeiras seguras."
+    },
+    {
+      "bloco": "soneca_1",
+      "descricao": "Primeira soneca respeitando a janela de sono da idade. Escureça o quarto e use ruído branco."
+    },
+    {
+      "bloco": "almoco",
+      "descricao": "Alimentação conforme orientação pediátrica. Bebês acima de 6 meses já fazem uma refeição mais completa."
+    },
+    {
+      "bloco": "soneca_2",
+      "descricao": "Segunda soneca do dia. Ambiente calmo e silencioso."
+    },
+    {
+      "bloco": "leitura",
+      "descricao": "Atividades calmas, leitura de livrinhos ou músicas suaves."
+    },
+    {
+      "bloco": "banho",
+      "descricao": "Banho morno seguido de massagem relaxante."
+    },
+    {
+      "bloco": "historia",
+      "descricao": "História curta ou canção de ninar como ritual pré-sono."
+    },
+    {
+      "bloco": "sono",
+      "descricao": "Sono noturno em ambiente escuro, silencioso e com temperatura adequada."
+    }
+  ],
+
+  "creche": [
+    {
+      "bloco": "despertar",
+      "descricao": "Despertar calmo, higiene e troca de fralda. Prepare a criança para a creche com carinho."
+    },
+    {
+      "bloco": "cafe",
+      "descricao": "Café da manhã reforçado: leite materno ou fórmula. Se já faz introdução alimentar, ofereça frutas ou papinha leve."
+    },
+    {
+      "bloco": "creche_entrada",
+      "descricao": "Leve a criança até a creche e se despeça com segurança. Explique que vai buscá-la mais tarde."
+    },
+    {
+      "bloco": "creche_soneca",
+      "descricao": "Durante o período escolar, a creche organiza cochilos supervisionados conforme a idade."
+    },
+    {
+      "bloco": "creche_saida",
+      "descricao": "Na saída, receba o bebê com calma e carinho. O reencontro deve ser positivo e acolhedor."
+    },
+    {
+      "bloco": "lanche",
+      "descricao": "Após chegar em casa, ofereça um lanche leve (frutas, leite ou iogurte, conforme a idade)."
+    },
+    {
+      "bloco": "leitura",
+      "descricao": "Depois da creche, opte por atividades leves: leitura, música suave, brinquedos tranquilos."
+    },
+    {
+      "bloco": "banho",
+      "descricao": "Banho morno e massagem relaxante para ajudar a desacelerar após o dia."
+    },
+    {
+      "bloco": "historia",
+      "descricao": "História curta ou canção de ninar. Repita o ritual todas as noites."
+    },
+    {
+      "bloco": "sono",
+      "descricao": "Sono noturno: ambiente escuro, silencioso e temperatura adequada (20-22°C)."
+    }
+  ],
+
+  "especial": [
+    {
+      "bloco": "despertar",
+      "descricao": "Acordar no ritmo da criança, com previsibilidade e calma. Se houver orientações médicas, siga o protocolo."
+    },
+    {
+      "bloco": "cafe",
+      "descricao": "Alimentação específica conforme orientação profissional (nutricionista ou pediatra)."
+    },
+    {
+      "bloco": "atividade_terapeutica",
+      "descricao": "Atividades orientadas por terapeutas: estímulos motores, fonoaudiologia ou terapia ocupacional."
+    },
+    {
+      "bloco": "soneca_1",
+      "descricao": "Primeira soneca adaptada ao limite sensorial da criança."
+    },
+    {
+      "bloco": "almoco",
+      "descricao": "Refeição supervisionada e adaptada às necessidades nutricionais."
+    },
+    {
+      "bloco": "soneca_2",
+      "descricao": "Segunda soneca ou pausa para relaxamento, se necessário."
+    },
+    {
+      "bloco": "terapia",
+      "descricao": "Sessões de terapia indicadas por especialistas."
+    },
+    {
+      "bloco": "historia",
+      "descricao": "História ou música calma no final do dia."
+    },
+    {
+      "bloco": "sono",
+      "descricao": "Sono noturno em ambiente adaptado e calmo."
+    }
+  ],
+
+  "pais_detalhistas": [
+    {
+      "bloco": "despertar",
+      "descricao": "Explique cada passo: acordar, trocar fralda, lavar as mãos. Isso cria previsibilidade."
+    },
+    {
+      "bloco": "cafe",
+      "descricao": "Explique o que o bebê está comendo e os sabores. A partir dos 6 meses, mostre texturas."
+    },
+    {
+      "bloco": "brincar_detalhado",
+      "descricao": "Brincadeiras educativas: livros ilustrados, sons, músicas e conversas. Explique tudo o que estão fazendo."
+    },
+    {
+      "bloco": "soneca_1",
+      "descricao": "Explique que agora é hora de descansar. Faça uma pequena massagem nos pés antes de deitar."
+    },
+    {
+      "bloco": "almoco",
+      "descricao": "Durante a refeição, mostre os alimentos e fale sobre as cores e sabores."
+    },
+    {
+      "bloco": "soneca_2",
+      "descricao": "Segunda soneca. Continue conversando calmamente para sinalizar a transição."
+    },
+    {
+      "bloco": "leitura",
+      "descricao": "Leia histórias simples e comente as imagens para estimular linguagem."
+    },
+    {
+      "bloco": "banho",
+      "descricao": "Explique cada etapa do banho: 'agora vou lavar a mãozinha', 'agora o pézinho'."
+    },
+    {
+      "bloco": "historia",
+      "descricao": "História ou canção tranquila antes de dormir."
+    },
+    {
+      "bloco": "sono",
+      "descricao": "Ambiente silencioso, explique que agora é hora de dormir. Repita palavras calmantes."
+    }
+  ]
+}
