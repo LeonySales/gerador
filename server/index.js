@@ -5,7 +5,9 @@ import bodyParser from "body-parser";
 import { createClient } from "@supabase/supabase-js";
 
 const app = express();
-const PORT = 3001; // Porta separada do seu frontend
+
+// Usa a porta fornecida pelo Railway ou 3001 localmente
+const PORT = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 
@@ -22,7 +24,10 @@ app.post("/webhook/kiwify", async (req, res) => {
 
   const body = req.body;
 
-  if (body.order_status === "paid" && body.webhook_event_type === "order_approved") {
+  if (
+    body.order_status === "paid" &&
+    body.webhook_event_type === "order_approved"
+  ) {
     const email = body.Customer?.email;
     if (!email) {
       return res.status(400).json({ error: "Email não encontrado" });
@@ -40,7 +45,7 @@ async function criarUsuarioSeNaoExistir(email) {
     return;
   }
 
-  const existe = users?.users.find(u => u.email === email);
+  const existe = users?.users.find((u) => u.email === email);
 
   if (!existe) {
     const { error } = await supabase.auth.admin.createUser({
@@ -55,6 +60,7 @@ async function criarUsuarioSeNaoExistir(email) {
   }
 }
 
-app.listen(PORT, () => {
-  console.log(`Servidor webhook rodando em http://localhost:${PORT}`);
+// Escuta em 0.0.0.0 para funcionar no Railway e localmente
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Servidor webhook rodando na porta ${PORT}`);
 });
