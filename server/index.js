@@ -10,21 +10,22 @@ console.log("DEBUG SUPABASE URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
 
 app.use(bodyParser.json());
 
-// Conexão Supabase
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-// Rota principal para testar GET
 app.get("/", (req, res) => {
   res.send("Servidor webhook ativo!");
 });
 
-// Webhook Kiwify
 app.post("/webhook/kiwify", async (req, res) => {
-  const token = req.headers.authorization?.split(" ")[1];
+  const authHeader = req.headers.authorization;
+  console.log("Authorization recebido:", authHeader);
+
+  const token = authHeader?.split(" ")[1];
   if (token !== process.env.WEBHOOK_SECRET) {
+    console.log("Token inválido:", token);
     return res.status(401).json({ error: "Unauthorized" });
   }
 
@@ -45,7 +46,6 @@ app.post("/webhook/kiwify", async (req, res) => {
   return res.status(200).json({ ok: true });
 });
 
-// Função para criar usuário no Supabase
 async function criarUsuarioSeNaoExistir(email) {
   const { data: users, error: listError } = await supabase.auth.admin.listUsers();
   if (listError) {
@@ -68,7 +68,6 @@ async function criarUsuarioSeNaoExistir(email) {
   }
 }
 
-// Escuta na porta correta para Railway
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Servidor webhook rodando na porta ${PORT}`);
 });
