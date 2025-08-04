@@ -15,15 +15,19 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
+// Rota principal para teste
 app.get("/", (req, res) => {
   res.send("Servidor webhook ativo!");
 });
 
+// Webhook da Kiwify
 app.post("/webhook/kiwify", async (req, res) => {
-  const authHeader = req.headers.authorization;
-  console.log("Authorization recebido:", authHeader);
+  const headerToken = req.headers.authorization?.split(" ")[1];
+  const bodyToken = req.body?.token || req.query?.token;
+  const token = headerToken || bodyToken;
 
-  const token = authHeader?.split(" ")[1];
+  console.log("Token recebido:", token);
+
   if (token !== process.env.WEBHOOK_SECRET) {
     console.log("Token inválido:", token);
     return res.status(401).json({ error: "Unauthorized" });
@@ -68,6 +72,7 @@ async function criarUsuarioSeNaoExistir(email) {
   }
 }
 
+// Inicia o servidor
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Servidor webhook rodando na porta ${PORT}`);
 });
