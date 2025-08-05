@@ -1,54 +1,43 @@
 import 'dotenv/config';
-import express from "express";
-import { createClient } from "@supabase/supabase-js";
-import crypto from "crypto";
+import express from 'express';
+import bodyParser from 'body-parser';
+import crypto from 'crypto';
+import { createClient } from '@supabase/supabase-js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(bodyParser.json());
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-// Captura o raw body para gerar a assinatura corretamente
-app.use(express.json({
-  verify: (req, res, buf) => {
-    req.rawBody = buf;
-  }
-}));
-
-app.post("/webhook/kiwify", async (req, res) => {
+app.post('/webhook/kiwify', async (req, res) => {
+  // 1. Verifica assinatura da query
   const signature = req.query.signature;
-  const secret = process.env.WEBHOOK_SECRET;
+  console.log('🔐 Assinatura recebida (query):', signature);
 
-  if (!signature) {
-    console.log("❌ Assinatura ausente na query string.");
-    return res.status(401).json({ error: "Assinatura ausente" });
+  const calculatedSignature = crypto
+    .createHmac('sha256', process.env.WEBHOOK_SECRET)
+    .update(JSON.stringify(req.body))
+    .digest('hex');
+
+  console.log('🔐 Assinatura calculada:', calculatedSignature);
+
+  if (signature !== calculatedSignature) {
+    console.log('❌ Assinatura inválida');
+    return res.status(401).json({ error: 'Assinatura inválida' });
   }
 
-  const calculated = crypto
-    .createHmac("sha256", secret)
-    .update(req.rawBody)
-    .digest("hex");
+  // 2. Verifica tipo de evento
+  const { order_status, webhook_event_type, Customer } = req.body;
 
-  console.log("🔐 Assinatura recebida (query):", signature);
-  console.log("🔐 Assinatura calculada:", calculated);
-
-  if (signature !== calculated) {
-    console.log("❌ Assinatura inválida");
-    return res.status(401).json({ error: "Assinatura inválida" });
-  }
-
-  const body = req.body;
-
-  if (
-    body.order_status === "paid" &&
-    body.webhook_event_type === "order_approved"
-  ) {
-    const email = body.Customer?.email;
+  if (order_status === 'paid' && webhook_event_type === 'order_approved') {
+    const email = Customer?.email;
     if (!email) {
-      return res.status(400).json({ error: "Email não encontrado" });
+      return res.status(400).json({ error: 'Email não encontrado' });
     }
 
     await criarUsuarioSeNaoExistir(email);
@@ -59,8 +48,9 @@ app.post("/webhook/kiwify", async (req, res) => {
 
 async function criarUsuarioSeNaoExistir(email) {
   const { data: users, error: listError } = await supabase.auth.admin.listUsers();
+
   if (listError) {
-    console.error("Erro listando usuários:", listError);
+    console.error('Erro ao listar usuários:', listError);
     return;
   }
 
@@ -72,13 +62,13 @@ async function criarUsuarioSeNaoExistir(email) {
       email_confirm: true,
     });
 
-    if (error) console.error("Erro ao criar usuário:", error);
+    if (error) console.error('❌ Erro ao criar usuário:', error);
     else console.log(`✅ Usuário ${email} criado com sucesso!`);
   } else {
-    console.log(`⚠️ Usuário ${email} já existe.`);
+    console.log(`ℹ️ Usuário ${email} já existe.`);
   }
 }
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Servidor webhook rodando na porta ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Servidor webhook rodando na porta ${PORT}`);
 });
