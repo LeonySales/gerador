@@ -1,13 +1,14 @@
 import 'dotenv/config';
 import express from 'express';
-import bodyParser from 'body-parser';
-import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
+import crypto from 'crypto';
+import getRawBody from 'raw-body';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(bodyParser.json());
+// Captura o raw body antes de fazer o JSON parse
+app.use('/webhook/kiwify', express.raw({ type: '*/*' }));
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -15,35 +16,42 @@ const supabase = createClient(
 );
 
 app.post('/webhook/kiwify', async (req, res) => {
-  // 1. Verifica assinatura da query
-  const signature = req.query.signature;
-  console.log('🔐 Assinatura recebida (query):', signature);
+  try {
+    const signature = req.query.signature;
+    const rawBody = req.body.toString(); // corpo original
 
-  const calculatedSignature = crypto
-    .createHmac('sha256', process.env.WEBHOOK_SECRET)
-    .update(JSON.stringify(req.body))
-    .digest('hex');
+    console.log('🔐 Assinatura recebida (query):', signature);
 
-  console.log('🔐 Assinatura calculada:', calculatedSignature);
+    const calculatedSignature = crypto
+      .createHmac('sha256', process.env.WEBHOOK_SECRET)
+      .update(rawBody)
+      .digest('hex');
 
-  if (signature !== calculatedSignature) {
-    console.log('❌ Assinatura inválida');
-    return res.status(401).json({ error: 'Assinatura inválida' });
-  }
+    console.log('🔐 Assinatura calculada:', calculatedSignature);
 
-  // 2. Verifica tipo de evento
-  const { order_status, webhook_event_type, Customer } = req.body;
-
-  if (order_status === 'paid' && webhook_event_type === 'order_approved') {
-    const email = Customer?.email;
-    if (!email) {
-      return res.status(400).json({ error: 'Email não encontrado' });
+    if (signature !== calculatedSignature) {
+      console.log('❌ Assinatura inválida');
+      return res.status(401).json({ error: 'Assinatura inválida' });
     }
 
-    await criarUsuarioSeNaoExistir(email);
-  }
+    const parsedBody = JSON.parse(rawBody);
 
-  return res.status(200).json({ ok: true });
+    if (
+      parsedBody.order_status === 'paid' &&
+      parsedBody.webhook_event_type === 'order_approved'
+    ) {
+      const email = parsedBody.Customer?.email;
+      if (!email) {
+        return res.status(400).json({ error: 'Email não encontrado' });
+      }
+      await criarUsuarioSeNaoExistir(email);
+    }
+
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    console.error('Erro geral:', error);
+    return res.status(500).json({ error: 'Erro no servidor' });
+  }
 });
 
 async function criarUsuarioSeNaoExistir(email) {
