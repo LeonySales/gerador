@@ -2,12 +2,11 @@ import 'dotenv/config';
 import express from 'express';
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
-import getRawBody from 'raw-body';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Captura o raw body antes de fazer o JSON parse
+// Configura o middleware para pegar o body RAW (sem parsear JSON)
 app.use('/webhook/kiwify', express.raw({ type: '*/*' }));
 
 const supabase = createClient(
@@ -17,11 +16,13 @@ const supabase = createClient(
 
 app.post('/webhook/kiwify', async (req, res) => {
   try {
-    const signature = req.query.signature;
-    const rawBody = req.body.toString(); // corpo original
+    // 1. Pega a assinatura do HEADER (não da query!)
+    const signature = req.headers['x-kiwify-webhook-signature'];
+    const rawBody = req.body.toString(); // Body em formato string
 
-    console.log('🔐 Assinatura recebida (query):', signature);
+    console.log('🔐 Assinatura recebida (header):', signature);
 
+    // 2. Calcula a assinatura esperada
     const calculatedSignature = crypto
       .createHmac('sha256', process.env.WEBHOOK_SECRET)
       .update(rawBody)
@@ -29,13 +30,16 @@ app.post('/webhook/kiwify', async (req, res) => {
 
     console.log('🔐 Assinatura calculada:', calculatedSignature);
 
+    // 3. Compara as assinaturas
     if (signature !== calculatedSignature) {
       console.log('❌ Assinatura inválida');
       return res.status(401).json({ error: 'Assinatura inválida' });
     }
 
+    // 4. Parseia o body (agora seguro, pois a assinatura é válida)
     const parsedBody = JSON.parse(rawBody);
 
+    // 5. Processa o evento "order_approved"
     if (
       parsedBody.order_status === 'paid' &&
       parsedBody.webhook_event_type === 'order_approved'
