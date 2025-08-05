@@ -5,31 +5,53 @@ import crypto from 'crypto';
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Middleware CRÍTICO - Deve ser o PRIMEIRO a processar a requisição
+// =============================================
+// 1. CONFIGURAÇÃO INICIAL
+// =============================================
+
+// Middleware para capturar o body RAW (crucial para webhooks)
 app.use(express.raw({ type: 'application/json' }));
 
-// Rota do Webhook
+// Health Check
+app.get('/', (req, res) => {
+  res.status(200).json({ 
+    status: 'online',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// =============================================
+// 2. MIDDLEWARE DE LOGS (DEBUG COMPLETO)
+// =============================================
+app.use('/webhook/kiwify', (req, res, next) => {
+  console.log('\n=== NOVA REQUISIÇÃO ===');
+  console.log('🔵 Método:', req.method);
+  console.log('🔵 URL:', req.originalUrl);
+  console.log('🔵 Headers:', JSON.stringify(req.headers, null, 2));
+  console.log('🔵 Body (200 primeiros caracteres):', req.body?.toString()?.substring(0, 200));
+  next();
+});
+
+// =============================================
+// 3. ROTA PRINCIPAL DO WEBHOOK
+// =============================================
 app.post('/webhook/kiwify', async (req, res) => {
   try {
-    // 1. Log completo para debug (headers + body)
-    console.log('\n=== NOVA REQUISIÇÃO ===');
-    console.log('📨 Headers:', JSON.stringify(req.headers, null, 2));
-    console.log('📦 Body (raw):', req.body.toString().substring(0, 200) + '...');
-
-    // 2. Extrai a assinatura (case-insensitive)
+    // Extrai a assinatura (com fallback para testes)
     const signature = 
       req.headers['x-kiwify-webhook-signature'] || 
-      req.headers['X-Kiwify-Webhook-Signature'];
+      req.headers['X-Kiwify-Webhook-Signature'] ||
+      process.env.TEST_SIGNATURE; // Apenas para desenvolvimento!
 
-    if (!signature) {
-      console.error('❌ ERRO: Header de assinatura não encontrado');
+    if (!signature && process.env.NODE_ENV === 'production') {
+      console.error('❌ ERRO CRÍTICO: Header de assinatura ausente');
       return res.status(401).json({ 
-        error: 'Header X-Kiwify-Webhook-Signature ausente',
-        debug: { headers: req.headers } 
+        error: 'Autenticação requerida',
+        details: 'Header X-Kiwify-Webhook-Signature não encontrado'
       });
     }
 
-    // 3. Validação da assinatura
+    // Validação da assinatura
     const rawBody = req.body.toString();
     const calculatedSignature = crypto
       .createHmac('sha256', process.env.WEBHOOK_SECRET)
@@ -45,45 +67,43 @@ app.post('/webhook/kiwify', async (req, res) => {
     if (!isSignatureValid) {
       console.error('❌ Assinatura inválida', {
         recebida: signature,
-        calculada: calculatedSignature
+        calculada: calculatedSignature,
+        secret_used: Boolean(process.env.WEBHOOK_SECRET)
       });
       return res.status(403).json({ 
-        error: 'Assinatura inválida',
-        debug: {
-          secret_used: Boolean(process.env.WEBHOOK_SECRET),
-          body_length: rawBody.length
-        }
+        error: 'Acesso não autorizado',
+        details: 'Assinatura do webhook inválida'
       });
     }
 
-    // 4. Processamento do payload (só executa se a assinatura for válida)
+    // Processamento do payload
     const payload = JSON.parse(rawBody);
     console.log('✅ Webhook válido! Evento:', payload.webhook_event_type);
 
-    // === SEU CÓDIGO DE PROCESSAMENTO AQUI ===
-    // Exemplo:
+    // =============================================
+    // 4. LÓGICA DE NEGÓCIO (EXEMPLO)
+    // =============================================
     if (payload.order_status === 'paid') {
       console.log('💸 Pagamento aprovado para:', payload.customer?.email);
+      // Adicione aqui sua lógica (ex: criar usuário, liberar acesso, etc.)
     }
 
     return res.status(200).json({ success: true });
 
   } catch (error) {
-    console.error('💥 ERRO CRÍTICO:', error);
+    console.error('💥 ERRO INTERNO:', error);
     return res.status(500).json({ 
-      error: 'Erro interno',
+      error: 'Erro no servidor',
       details: error.message 
     });
   }
 });
 
-// Health Check
-app.get('/', (req, res) => {
-  res.send('Webhook operacional - ' + new Date().toISOString());
-});
-
-// Inicia o servidor
+// =============================================
+// 5. INICIALIZAÇÃO DO SERVIDOR
+// =============================================
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Webhook rodando na porta ${PORT}`);
-  console.log('🔑 Webhook Secret:', Boolean(process.env.WEBHOOK_SECRET) ? '***' : 'NÃO CONFIGURADO!');
+  console.log(`\n🚀 Servidor rodando na porta ${PORT}`);
+  console.log('🔑 Webhook Secret:', process.env.WEBHOOK_SECRET ? '***' : 'NÃO CONFIGURADO!');
+  console.log('🔧 Modo:', process.env.NODE_ENV || 'development');
 });
