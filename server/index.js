@@ -1,45 +1,38 @@
 import 'dotenv/config';
 import express from "express";
-import bodyParser from "body-parser";
 import { createClient } from "@supabase/supabase-js";
 import crypto from "crypto";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Supabase
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-// Middleware para capturar o raw body (necessário para HMAC)
+// Captura o raw body para gerar a assinatura corretamente
 app.use(express.json({
   verify: (req, res, buf) => {
     req.rawBody = buf;
   }
 }));
 
-// Teste
-app.get("/", (req, res) => {
-  res.send("Servidor webhook seguro ativo!");
-});
-
-// Webhook Kiwify com validação HMAC-SHA256
 app.post("/webhook/kiwify", async (req, res) => {
-  const signature = req.headers["x-kiwify-webhook-signature"];
+  const signature = req.query.signature;
   const secret = process.env.WEBHOOK_SECRET;
 
   if (!signature) {
-    console.log("❌ Assinatura ausente");
+    console.log("❌ Assinatura ausente na query string.");
     return res.status(401).json({ error: "Assinatura ausente" });
   }
 
-  // Recalcular o hash
-  const hmac = crypto.createHmac("sha256", secret);
-  const calculated = hmac.update(req.rawBody).digest("hex");
+  const calculated = crypto
+    .createHmac("sha256", secret)
+    .update(req.rawBody)
+    .digest("hex");
 
-  console.log("🔐 Assinatura recebida:", signature);
+  console.log("🔐 Assinatura recebida (query):", signature);
   console.log("🔐 Assinatura calculada:", calculated);
 
   if (signature !== calculated) {
